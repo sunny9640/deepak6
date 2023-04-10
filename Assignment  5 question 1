@@ -1,0 +1,44 @@
+Write a program that reads a file named "input.txt" and writes all lines containing the word "error" to a file named "error_log.txt". Then, read the "error_log.txt" file and print the contents to the console
+
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    
+FILE *input_file = fopen("input.txt", "r");
+if (input_file == NULL) {
+printf("Error: Could not open input.txt\n");
+return 1;
+}
+
+FILE *error_file = fopen("error_log.txt", "w");
+if (error_file == NULL) {
+printf("Error: Could not open error_log.txt\n");
+return 1;
+}
+
+char line[100];
+
+while (fgets(line, 100, input_file)) {
+if (strstr(line, "error") != NULL) {
+fputs(line, error_file);
+}
+}
+fclose(input_file);
+fclose(error_file);
+
+error_file = fopen("error_log.txt", "r");
+if (error_file == NULL) {
+printf("Error: Could not open error_log.txt\n");
+return 1;
+}
+
+printf("Contents of error_log.txt:\n");
+while (fgets(line, 100, error_file)) {
+printf("%s", line);
+}
+
+fclose(error_file);
+return 0;
+}
