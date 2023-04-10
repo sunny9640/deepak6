@@ -1,0 +1,36 @@
+Write a program that reads a file named "data.txt" and creates a new file named "statistics.txt". The program should write the number of occurrences of each letter of the alphabet in the file to the "statistics.txt" file.
+
+
+#include <stdio.h>
+#include <ctype.h>
+#define 
+int main() {
+   
+FILE *input_file = fopen("data.txt", "r");
+if (input_file == NULL) {
+printf("Error: Could not open input file\n");
+return 1;
+}
+int counts[ALPHABET_SIZE] = {0};
+int c;
+while ((c = fgetc(input_file)) != EOF) {
+if (isalpha(c)) {
+c = tolower(c);
+counts[c - 'a']++;
+}
+}
+
+fclose(input_file);
+
+FILE *output_file = fopen("statistics.txt", "w");
+if (output_file == NULL) {
+printf("Error: Could not open output file\n");
+return 1;
+}
+
+for (int i = 0; i < ALPHABET_SIZE; i++) {
+fprintf(output_file, "%c: %d\n", 'a' + i, counts[i]);
+}
+fclose(output_file);
+return 0;
+}
