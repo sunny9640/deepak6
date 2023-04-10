@@ -1,0 +1,33 @@
+Create a program that prompts the user to enter the name of a file and a search string. The program should read the file and print all lines that contain the search string to the console.
+
+
+#include <stdio.h>
+#include <string.h>
+#define 
+int main() {
+ char file_name[MAX_LINE_LENGTH];
+char search_string[MAX_LINE_LENGTH];
+printf("Enter the name of the file to search: ");
+fgets(file_name, MAX_LINE_LENGTH, stdin);
+printf("Enter the search string: ");
+fgets(search_string, MAX_LINE_LENGTH, stdin);
+
+file_name[strcspn(file_name, "\n")] = '\0';
+search_string[strcspn(search_string, "\n")] = '\0';
+
+FILE *input_file = fopen(file_name, "r");
+if (input_file == NULL) {
+printf("Error: Could not open file %s\n", file_name);
+return 1;
+}
+
+char line[MAX_LINE_LENGTH];
+while (fgets(line, MAX_LINE_LENGTH, input_file) != NULL) {
+if (strstr(line, search_string) != NULL) {
+printf("%s", line);
+}
+}
+
+fclose(input_file);
+return 0;
+}
